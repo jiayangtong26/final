@@ -1,0 +1,10 @@
+<h2> write a new news  </h2>
+
+<%= form_tag(reports_url,  method: 'post') do %>
+  <h3>title:</h3>
+  <%= text_field_tag(:title) %>
+  <h3>content:</h3>
+  <%= text_area_tag(:content, '', size: '150x30')  %>
+  <br>
+  <%= submit_tag('post') %>
+<% end %>

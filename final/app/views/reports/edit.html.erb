@@ -1,0 +1,11 @@
+<h2>edit the news </h2>
+
+<%= form_tag(report_url(@report.id), method: 'patch') do %>
+  <h3>title:</h3>
+  <%= text_area_tag(:title, @report.title, size: '20x1')  %>
+  <h3>content</h3>
+  <%= text_area_tag(:content, @report.content, size: '150x30') %>
+  <br>
+  <%= submit_tag('update') %>
+<% end %>
+

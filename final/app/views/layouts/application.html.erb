@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>News4U</title>
+  <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+  <style>
+    h1 {
+      border-bottom: solid 3px gray;
+      margin-bottom: 24px;
+    }
+  </style>
+
+</head>
+<body>
+
+  <div class="container">
+
+    <h1><%= link_to "News4U", "/" %></h1>
+
+    <% if notice.present? %>
+      <div class="alert alert-info"%>
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <%= yield %>
+
+  </div>
+
+</body>
+</html>

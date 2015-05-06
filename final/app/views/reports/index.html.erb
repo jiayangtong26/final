@@ -1,0 +1,12 @@
+
+<% @reports_list.each do |report| %>
+  <h3>
+    <%= link_to report.title, report_url(report.id) %> 
+    [<%= link_to 'delete', report_url(report.id), method: :delete %>]
+  </h3>
+<% end %>
+
+<hr>
+
+<%= link_to 'add news', new_report_url %>
+
