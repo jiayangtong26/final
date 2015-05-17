@@ -2,10 +2,14 @@
 Report
   title: string
   content: text
+  posted_date: date
+  user_ID: integer
 
 User
   user_name: string
+  email: string
   pass_word: string
+  user_type: string
 
 Tag
   tag_name: string
@@ -14,7 +18,7 @@ Preference
   user_ID: integer
   tag_ID: integer
 
-Containing
+Subject
   tag_ID: integer
   report_ID: integer
 

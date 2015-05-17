@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
 
   root 'reports#index'
-  get '/reports' => 'reports#index'
-  get '/reports/new' => 'reports#new', :as => 'new_report'
-  post '/reports' => 'reports#create'
-  get '/reports/:id' => 'reports#show', :as => 'report'
-  get '/reports/:id/edit' => 'reports#edit', :as => 'edit_report'
-  patch '/reports/:id' => 'reports#update'
-  delete 'reports/:id' => 'reports#destroy'
+
+  #get '/reports' => 'reports#index'
+  #get '/reports/new' => 'reports#new', :as => 'new_report'
+  #post '/reports' => 'reports#create'
+  #get '/reports/:id' => 'reports#show', :as => 'report'
+  #get '/reports/:id/edit' => 'reports#edit', :as => 'edit_report'
+  #patch '/reports/:id' => 'reports#update'
+  #delete 'reports/:id' => 'reports#destroy'
 
 
   #resources :reports

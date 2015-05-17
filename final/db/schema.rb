@@ -13,19 +13,21 @@
 
 ActiveRecord::Schema.define(version: 0) do
 
-  create_table "containings", force: :cascade do |t|
-    t.integer "tag_ID"
-    t.integer "report_ID"
-  end
-
   create_table "preferences", force: :cascade do |t|
     t.integer "user_ID"
     t.integer "tag_ID"
   end
 
   create_table "reports", force: :cascade do |t|
-    t.string "title"
-    t.text   "content"
+    t.string  "title"
+    t.text    "content"
+    t.date    "posted_date"
+    t.integer "user_ID"
+  end
+
+  create_table "subjects", force: :cascade do |t|
+    t.integer "tag_ID"
+    t.integer "report_ID"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -35,6 +37,8 @@ ActiveRecord::Schema.define(version: 0) do
   create_table "users", force: :cascade do |t|
     t.string "user_name"
     t.string "pass_word"
+    t.string "email"
+    t.string "user_type"
   end
 
 end
