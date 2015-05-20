@@ -2,7 +2,7 @@
 Report
   title: string
   content: text
-  posted_date: date
+  posted_date: datetime
   user_ID: integer
 
 User
