@@ -1,0 +1,24 @@
+<hr>
+Welcome, <%= link_to @current_user.user_name, edit_user_url %>!
+<%= link_to 'Home', reports_url%>
+<% if @current_user.user_type == 'reporter' || @current_user.user_type == 'admin' %>
+  <%= link_to 'Post', new_report_url %>
+<% end %>
+<%= link_to 'Logout', logout_url, :method => :delete %>
+
+<hr>
+<%= notice %>
+<%= form_tag update_user_url, method: :patch do %>
+user name:<%= @current_user.user_name %>
+<br>
+Email address:<%= text_field_tag 'email_add', @current_user.email%>
+<br>
+password:<%= password_field_tag 'pass_word', @current_user.pass_word  %>
+<br>
+confirm password:<%= password_field_tag 'confirm_pw', @current_user.pass_word %>
+<br>
+preference:<%= text_field_tag 'preference', @tag_list %>
+<br>
+<%= submit_tag 'update' %>
+<% end %>
+

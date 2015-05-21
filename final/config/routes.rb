@@ -4,23 +4,15 @@ Rails.application.routes.draw do
   root 'sessions#new'
   get '/login' => 'sessions#new', as: :login
   post '/login' => 'sessions#create'
-  delete 'logout' => 'sessions#destroy', as: :logout
+  delete '/logout' => 'sessions#destroy', as: :logout
+
+  # for user profile
+  post '/users' => 'users#create', as: :new_user
+  get '/users/edit' => 'users#edit', as: :edit_user
+  patch '/users/update' => 'users#update', as: :update_user
 
   # RESTful for reports
   resources :reports
-
-  #root 'reports#index'
-
-  #get '/reports' => 'reports#index'
-  #get '/reports/new' => 'reports#new', :as => 'new_report'
-  #post '/reports' => 'reports#create'
-  #get '/reports/:id' => 'reports#show', :as => 'report'
-  #get '/reports/:id/edit' => 'reports#edit', :as => 'edit_report'
-  #patch '/reports/:id' => 'reports#update'
-  #delete 'reports/:id' => 'reports#destroy'
-
-
-  #resources :reports
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

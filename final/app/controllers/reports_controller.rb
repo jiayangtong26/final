@@ -1,7 +1,6 @@
 class ReportsController < ApplicationController
 
 	before_action :get_user, :only => [:index, :show, :edit, :new, :create]
-  # before_action :find_movie, :except => [:index, :create, :new]
 
   def get_user
     @current_user = User.find_by(:id => session["current_user_id"])

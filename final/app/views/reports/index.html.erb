@@ -1,5 +1,5 @@
 <hr>
-Welcome, <%= @current_user.user_name %>
+Welcome, <%= link_to @current_user.user_name, edit_user_url %>!
 <%= link_to 'Home', reports_url%>
 <% if @current_user.user_type == 'reporter' || @current_user.user_type == 'admin' %>
   <%= link_to 'Post', new_report_url %>
