@@ -1,10 +1,18 @@
-<h2> write a new news  </h2>
+<hr>
+Welcome, <%= @current_user.user_name %>
+<%= link_to 'Home', reports_url%>
+<% if @current_user.user_type == 'reporter' || @current_user.user_type == 'admin' %>
+  <%= link_to 'Post', new_report_url %>
+<% end %>
+<%= link_to 'Logout', logout_url, :method => :delete %>
 
-<%= form_tag(reports_url,  method: 'post') do %>
-  <h3>title:</h3>
-  <%= text_field_tag(:title) %>
-  <h3>content:</h3>
-  <%= text_area_tag(:content, '', size: '150x30')  %>
+<%= form_tag(reports_url, method: 'post') do %>
+  title: <%= text_field_tag 'title' %>
   <br>
-  <%= submit_tag('post') %>
+  tag: <%= text_field_tag 'tags' %>
+  <br>
+  content:<br>
+  <%= text_area_tag 'content', '', rows:35, cols:100 %>
+  <br>
+  <%= submit_tag 'post' %>
 <% end %>

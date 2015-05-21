@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
 
-  root 'reports#index'
+  # for user login/session creation
+  root 'sessions#new'
+  get '/login' => 'sessions#new', as: :login
+  post '/login' => 'sessions#create'
+  delete 'logout' => 'sessions#destroy', as: :logout
+
+  # RESTful for reports
+  resources :reports
+
+  #root 'reports#index'
 
   #get '/reports' => 'reports#index'
   #get '/reports/new' => 'reports#new', :as => 'new_report'

@@ -1,0 +1,16 @@
+<%= @notice %>
+<hr>
+Log In
+<br>
+<% if flash[:login_err] %>
+  <div class="notice"><%= flash[:login_err] %></div>
+<% end %>
+<%= form_tag login_url, method: :post do%>
+  <p><label>User Name:</label><%= text_field_tag 'user_name' %></p>
+  <p><label>Password:</label><%= password_field_tag 'pass_word' %></p>
+  <p><%= submit_tag 'login' %>
+<% end %>
+
+<%= form_tag logout_url, method: :delete do%>
+  <p><%= submit_tag 'logoff' %>
+<% end %>
