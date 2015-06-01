@@ -1,18 +1,40 @@
-<hr>
-Welcome, <%= link_to @current_user.user_name, edit_user_url %>!
-<%= link_to 'Home', reports_url%>
-<% if @current_user.user_type == 'reporter' || @current_user.user_type == 'admin' %>
-  <%= link_to 'Post', new_report_url %>
-<% end %>
-<%= link_to 'Logout', logout_url, :method => :delete %>
+<div class="container" style="margin-top:50px;">
+  <div class="row">
+    <div class="col-xs-2">
+      <div class="row">
+      </div>
+    </div>
+    <div class="col-xs-7">
+      <div class="row">
+        <div class="col-xs-12">
+            <h2>New Report</h2>
+			<%= form_tag(reports_url, method: 'post') do %>
+			  <label for="title">Title</label>
+		      <%= text_field_tag 'title', nil, placeholder: "Title", :class => 'form-control', :required => true%>
+		      <label for="tags">Tags</label>
+		      <%= text_field_tag 'tags', nil, placeholder: "Tag1;Tag2;..." ,:class => 'form-control', :required => true %>
+		      <br>
+			  <%= text_area_tag 'content', nil, placeholder: "Report Content...", rows:13, :class => 'form-control', :required => true %>
+			  <br>
+			  <%= submit_tag 'Post', class: 'btn btn-primary' %>
+			<% end %>
+		</div>
+	  </div>
+    </div>
 
-<%= form_tag(reports_url, method: 'post') do %>
-  title: <%= text_field_tag 'title' %>
-  <br>
-  tag: <%= text_field_tag 'tags' %>
-  <br>
-  content:<br>
-  <%= text_area_tag 'content', '', rows:35, cols:100 %>
-  <br>
-  <%= submit_tag 'post' %>
-<% end %>
+    <div class="col-xs-3">
+      <div class="row">
+        <div class="list-group" style="margin-top:30px;">
+          <label class="list-group-item active">Welcome, <%= @current_user.user_name %>!</label>
+          <%= link_to 'Home', reports_url, class:"list-group-item" %> 
+          <%= link_to 'Profile', edit_user_url, class:"list-group-item" %> 
+          <% if @current_user.user_type == 'reporter' || @current_user.user_type == 'admin' %>
+            <%= link_to 'Write New Report', new_report_url, class:"list-group-item" %>
+          <% end %>
+          <%= link_to 'Favorites', "/reports?search_by=favorite&search_key_word=", :method => :get, class:"list-group-item" %>
+          <%= link_to 'Logout', logout_url, :method => :delete, class:"list-group-item" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

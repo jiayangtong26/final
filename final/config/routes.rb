@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   # for user login/session creation
   root 'sessions#new'
   get '/login' => 'sessions#new', as: :login
+  get '/login/about' => 'sessions#info'
   post '/login' => 'sessions#create'
   delete '/logout' => 'sessions#destroy', as: :logout
 
@@ -10,6 +11,13 @@ Rails.application.routes.draw do
   post '/users' => 'users#create', as: :new_user
   get '/users/edit' => 'users#edit', as: :edit_user
   patch '/users/update' => 'users#update', as: :update_user
+
+  # update preference from report
+  post '/preferences/:tag_id' => 'preferences#create'
+
+  # update favorite
+  post '/favorites/:report_id' => 'favorites#create'
+  delete '/favorites/:report_id' => 'favorites#destroy'
 
   # RESTful for reports
   resources :reports

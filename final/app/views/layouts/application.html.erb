@@ -2,33 +2,79 @@
 <html>
 <head>
   <title>News4U</title>
-  <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-
-  <style>
-    h1 {
-      border-bottom: solid 3px gray;
-      margin-bottom: 24px;
-    }
-  </style>
-
 </head>
 <body>
-
   <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">News4U</a>
+        </div>
 
-    <h1><%= link_to "News4U", "/" %></h1>
+        <% if session.has_key?('current_user_id') %>
+          <div id="navbar" class="navbar-collapse collapse">
+            <%= form_tag logout_url, method: :delete, class:"navbar-form navbar-right", role:"form" do%>
+              <label style='color:white;'>Welcome, <%= session['current_user_name'] %></label>
+              <%= submit_tag 'Logout', class:"btn btn-danger" %>
+            <% end %>
 
-    <% if notice.present? %>
-      <div class="alert alert-info"%>
-        <%= notice %>
+            <form class="navbar-form navbar-right" action="/reports" method="get" >
+              <label style='color:white;'>
+              Search by
+              </label>
+              <% if flash.key?('search_by') && (flash['search_by'] == 'tag' || flash['search_by'] == 'title') %>
+                <% if flash['search_by'] == 'tag'%>
+                  <select name='search_by' class='form-control'>
+                    <option value='tag' selected='selected'>tag</option>
+                    <option value='title'>title</option>
+                  </select>
+                <% else %>
+                  <select name='search_by' class='form-control'>
+                    <option value='title' selected='selected'>title</option>
+                    <option value='tag'>tag</option>
+                  </select>
+                <% end %>
+                <%= search_field_tag('search_key_word', flash['key_word'], class: 'form-control') %>
+              <% else %>
+                <select name='search_by' class='form-control'>
+                  <option value='title'>title</option>
+                  <option value='tag'>tag</option>
+                </select>
+                <%= search_field_tag('search_key_word', nil, class: 'form-control') %>
+              <% end %>
+              <button type="submit" class="btn btn-primary">search</button>
+            </form>
+
+          </div>
+        <% else %>
+          <div id="navbar" class="navbar-collapse collapse">
+            <%= form_tag login_url, method: :post, class:"navbar-form navbar-right", role:"form" do%>
+              <div class="form-group">
+                <%= text_field_tag 'user_name', nil, placeholder: 'User Name', class:"form-control", :required => true %>
+              </div>
+              <div class="form-group">
+                <%= password_field_tag 'pass_word', nil, placeholder: 'PassWord', class:"form-control", :required => true %>
+              </div>
+              <%= submit_tag 'Login', class:"btn btn-success" %>
+            <% end %>
+          </div><!--/.navbar-collapse -->
+        <% end %>
+
       </div>
-    <% end %>
-
+    </nav>
+  </div>
+  
+  <div class="container">
     <%= yield %>
-
   </div>
 
 </body>

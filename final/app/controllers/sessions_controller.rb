@@ -8,10 +8,12 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(user_name: params[:user_name])
-    if user.nil? or user.pass_word != params[:pass_word]
-      redirect_to root_url, flash: {login_err: 'Wrong username or password'}
+    if user.nil? or not user.authenticate(params[:pass_word])
+      redirect_to root_url, flash: {login_err: 'Login Error: Wrong username or password!'}
     else
       session[:current_user_id] = user.id
+      session[:current_user_name] = user.user_name
+      session[:current_user_type] = user.user_type
       redirect_to reports_url
     end
   end
@@ -19,11 +21,13 @@ class SessionsController < ApplicationController
   def destroy
     if session.has_key?(:current_user_id)
       session.delete(:current_user_id)
-      #session[:currrent_user_id] = nil
-      redirect_to root_url, flash: {login_err: 'Logoff successfully'}
-    else
-      redirect_to root_url, flash: {login_err: 'No need to Logoff'}
+      session.delete(:current_user_name)
+      session.delete(:current_user_type)
+      redirect_to root_url
     end
+  end
+
+  def info
   end
 
 end

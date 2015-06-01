@@ -8,7 +8,7 @@ Report
 User
   user_name: string
   email: string
-  pass_word: string
+  password_digest: string
   user_type: string
 
 Tag
@@ -21,6 +21,11 @@ Preference
 Subject
   tag_ID: integer
   report_ID: integer
+
+Favorite
+  user_ID: integer
+  report_ID: integer
+
 
 # Example table for a typical Book model.
 #

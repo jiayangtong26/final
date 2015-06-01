@@ -3,19 +3,23 @@ class UsersController < ApplicationController
   before_action :get_user, :only => [:edit, :update]
 
   def get_user
-    @current_user = User.find_by(:id => session["current_user_id"])
+    if not session.has_key?(:current_user_id)
+      redirect_to root_url, flash: {login_err: 'Login Error: Please login first!'}
+    else
+      @current_user = User.find_by(:id => session["current_user_id"])
+    end
   end
 
   def create
     user_exist = User.find_by(:user_name => params['user_name'])
     if not user_exist.nil?
-      redirect_to login_url, notice: 'Username already used'
+      redirect_to login_url, flash: {signup_err: 'Signup Error: Username already exists!'}
     elsif params['pass_word'] != params['confirm_pw']
-      redirect_to login_url, notice: 'password does not match'
+      redirect_to login_url, flash: {signup_err: 'Signup Error: Password does not match!'}
     else
       user = User.new
       user.user_name = params['user_name']
-      user.pass_word = params['pass_word']
+      user.password = params['pass_word']
       user.email = params['email_add']
       user.user_type = params['user_type']
       user.save
@@ -31,14 +35,14 @@ class UsersController < ApplicationController
       end
 
       session[:current_user_id] = user.id
+      session[:current_user_name] = user.user_name
+      session[:current_user_type] = user.user_type
       redirect_to reports_url
     end
   end
 
   def edit
-    if not session.has_key?(:current_user_id)
-      redirect_to root_url, flash: {login_err: 'Please login first'}
-    end
+    # check and get current user id via before_action
 
     @tag_list = ''
     prefer_list = Preference.where(:user_ID => @current_user.id)
@@ -54,11 +58,13 @@ class UsersController < ApplicationController
   end
 
   def update
+    # check and get current user id via before_action
+
     if params['pass_word'] != params['confirm_pw']
-      redirect_to edit_user_url, notice: 'password does not match'
+      redirect_to edit_user_url, flash: {update_err: 'User Update Error: Password does not match!'}
     else
       @current_user.email = params['email_add']
-      @current_user.pass_word = params['pass_word']
+      @current_user.password = params['pass_word']
       @current_user.save
 
       prefer_del = Preference.where(:user_ID => @current_user.id)

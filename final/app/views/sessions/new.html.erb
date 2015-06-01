@@ -1,35 +1,48 @@
-<hr>
-Log In
-<br>
 <% if flash[:login_err] %>
-  <div class="notice"><%= flash[:login_err] %></div>
-<% end %>
-<%= form_tag login_url, method: :post do%>
-  <p><label>User Name:</label><%= text_field_tag 'user_name' %></p>
-  <p><label>Password:</label><%= password_field_tag 'pass_word' %></p>
-  <p><%= submit_tag 'Login' %>
+  <div class="alert alert-danger" role="alert" style="margin-top:60px;">
+    <%= flash[:login_err] %>
+  </div>
+<% elsif flash[:signup_err] %>
+  <div class="alert alert-danger" role="alert" style="margin-top:60px;">
+    <%= flash[:signup_err] %>
+  </div>
 <% end %>
 
-<hr>
-New User Sign Up
-<br>
-<% if flash[:signup_err] %>
-  <div class="notice"><%= flash[:signup_err] %></div>
-<% end %>
-<%= form_tag new_user_url, method: :post do %>
-  <p><label>User Name:</label><%= text_field_tag 'user_name' %></p>
-  <p><label>Password:</label><%= password_field_tag 'pass_word' %></p>
-  <p><label>Comfirm Password:</label><%= password_field_tag 'confirm_pw' %></p>
-  <p><label>Email:</label><%= text_field_tag 'email_add' %></p>
-  User Type:
-  <br>
-  <%= radio_button_tag 'user_type', 'reader' %> reader
-  <br>
-  <%= radio_button_tag 'user_type', 'reporter' %> reporter
-  <br>
-  <%= radio_button_tag 'user_type', 'admin' %> admin
-  <br>
-  preference:<%= text_field_tag 'preference' %>
-  <br>
-  <p><%= submit_tag 'Sign up' %></p>
-<% end %>
+<div class="jumbotron" style="min-height: 550px;margin-top:60px;">
+  <div class="container col-xs-5 pull-left">
+    <h1>News4U!</h1>
+      <p>MPCS 52553 Web Development Final Project: A custom news website.</p> 
+      <%= link_to 'Read More...', '/login/about', method: :get %>
+      <p></p>
+      <p>Two default users: </p>
+      <p>reporter/reporter or reader/reader</p>
+  </div>
+  <div class="container col-xs-5 pull-right">
+    <%= form_tag new_user_url, method: :post, class: "form-signin" do %>
+    <h2 class="form-signin-heading">New User Sign Up</h2>
+    <label for="user_name">User Name</label>
+    <%= text_field_tag 'user_name', nil, placeholder: "User Name", :class => 'form-control', :required => true %>
+    <label for="pass_word">Password:</label>
+    <%= password_field_tag 'pass_word', nil, placeholder: "Password", :class => 'form-control', :required => true %>
+
+    <%= password_field_tag 'confirm_pw', nil, placeholder: "Comfirmed Password", :class => 'form-control', :required => true %>
+    <label for="email_add">Email:</label>
+    <%= text_field_tag 'email_add', nil, placeholder: "Email" ,:class => 'form-control', :required => true %>
+    
+    <label for="user_type">User Type:</label>
+    <select name='user_type' class='form-control'>
+      <option value='reader' selected='selected'>reader</option>
+      <option value='reporter'>reporter</option>
+      <option value='admin'>admin</option>
+    </select>
+
+    <label for="preference">Preference:</label>
+    <%= text_field_tag 'preference', nil, placeholder: "Pref1;Pref2;..." ,:class => 'form-control', :required => true %>
+    <br>
+    <%= submit_tag 'Sign up', class: 'btn btn-lg btn-primary btn-block' %>
+    <% end %>
+  </div>
+</div>
+
+
+

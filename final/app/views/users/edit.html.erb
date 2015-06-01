@@ -1,24 +1,50 @@
-<hr>
-Welcome, <%= link_to @current_user.user_name, edit_user_url %>!
-<%= link_to 'Home', reports_url%>
-<% if @current_user.user_type == 'reporter' || @current_user.user_type == 'admin' %>
-  <%= link_to 'Post', new_report_url %>
+<% if flash[:update_err] %>
+  <div class="alert alert-danger" role="alert" style="margin-top:60px;">
+    <%= flash[:update_err] %>
+</div>
 <% end %>
-<%= link_to 'Logout', logout_url, :method => :delete %>
+<div class="container" style="margin-top:60px;">
+  <div class="row">
+    <div class="col-xs-2">
+      <div class="row">
+      </div>
+    </div>
 
-<hr>
-<%= notice %>
-<%= form_tag update_user_url, method: :patch do %>
-user name:<%= @current_user.user_name %>
-<br>
-Email address:<%= text_field_tag 'email_add', @current_user.email%>
-<br>
-password:<%= password_field_tag 'pass_word', @current_user.pass_word  %>
-<br>
-confirm password:<%= password_field_tag 'confirm_pw', @current_user.pass_word %>
-<br>
-preference:<%= text_field_tag 'preference', @tag_list %>
-<br>
-<%= submit_tag 'update' %>
-<% end %>
+    <div class="col-xs-7">
+      <div class="row">
+        <div class="container col-xs-12">
+			<hr>
+		    <%= form_tag update_user_url, method: :patch do %>
+		      <h2>Profile Update</h2>
+		      <label for="user_name">User Name</label>
+		      <%= text_field_tag 'user_name', @current_user.user_name, placeholder: "User Name", :class => 'form-control', :disabled => true %>
+		      <label for="email_add">Email:</label>
+		      <%= text_field_tag 'email_add', @current_user.email, placeholder: "Email" ,:class => 'form-control', :required => true %>
+		      <label for="pass_word">Password:</label>
+		      <%= password_field_tag 'pass_word', @current_user.password, placeholder: "Password", :class => 'form-control', :required => true %>
+              <%= password_field_tag 'confirm_pw', @current_user.password, placeholder: "Comfirmed Password", :class => 'form-control', :required => true %>
+		      <label for="preference">Preference:</label>
+		      <%= text_field_tag 'preference', @tag_list, placeholder: "Pref1;Pref2;..." ,:class => 'form-control', :required => true %>
+		      <br>
+		      <%= submit_tag 'Update', class: 'btn btn-lg btn-primary btn-block' %>
+		    <% end %>
+		</div>
+	  </div>
+    </div>
 
+    <div class="col-xs-3">
+      <div class="row">
+        <div class="list-group" style="margin-top:30px;">
+          <label class="list-group-item active">Welcome, <%= @current_user.user_name %>!</label>
+          <%= link_to 'Home', reports_url, class:"list-group-item" %> 
+          <%= link_to 'Profile', edit_user_url, class:"list-group-item" %> 
+          <% if @current_user.user_type == 'reporter' || @current_user.user_type == 'admin' %>
+            <%= link_to 'Write New Report', new_report_url, class:"list-group-item" %>
+          <% end %>
+          <%= link_to 'Favorites', "/reports?search_by=favorite&search_key_word=", :method => :get, class:"list-group-item" %>
+          <%= link_to 'Logout', logout_url, :method => :delete, class:"list-group-item" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
